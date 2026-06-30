@@ -8,11 +8,28 @@
 import SwiftUI
 
 struct AppTextField: View {
+    let title: String
+    @Binding var text: String
+    var isSecure = false
+    @FocusState private var focused: Bool
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Group {
+            if isSecure {
+                SecureField(title, text: $text)
+            } else {
+                TextField(title, text: $text)
+            }
+        }
+        .focused($focused)
+        .padding(12)
+        .overlay {
+            RoundedRectangle(cornerRadius: 26)
+                .stroke(focused ? .blue : .gray, lineWidth: 1)
+        }
     }
 }
 
-#Preview {
-    AppTextField()
-}
+//#Preview {
+//    AppTextField()
+//}

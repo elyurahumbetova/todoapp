@@ -6,19 +6,41 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
-struct ContentView: View {
+struct MainView: View {
+    
+    @State private var viewModel = MainViewModel()
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        if viewModel.isLoading {
+            SplashView()
+        }else if viewModel.currentUserId.isEmpty{
+            LoginView()
+
         }
-        .padding()
+        
+        else {
+            accountView(userId: viewModel.currentUserId)
+        }
+    }
+    
+    @ViewBuilder
+    
+    func accountView(userId: String) -> some View{
+        TabView{
+            TodoListView(userId: userId)
+                .tabItem{
+                    Label("Tasks", systemImage: "house")
+                }
+            
+            ProfileView()
+                .tabItem{
+                    Label("Profile",systemImage: "person.circle")
+                }
+        }
     }
 }
 
 #Preview {
-    ContentView()
+    MainView()
 }

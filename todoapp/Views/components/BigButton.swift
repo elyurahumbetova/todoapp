@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct BigButton: View {
+    let action: () -> Void
+    let text: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(action: action){
+            Text(text)
+                .foregroundStyle(Color(.white))
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal)
+        .padding(.vertical)
+        .background(Color(.blue))
+        .clipShape(RoundedRectangle(cornerRadius: 25))
+        
     }
-}
-
-#Preview {
-    BigButton()
+    
+    
 }
